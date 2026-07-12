@@ -45,7 +45,7 @@ _CSS = """
 
 :root{
   --bg:#0a0e14; --panel:#121a24; --border:#1e2a38;
-  --text:#e6ecf3; --muted:#8593a6; --green:#00c896; --red:#ff5d73;
+  --text:#f2f6fb; --muted:#aab4c4; --green:#00c896; --red:#ff5d73;
 }
 
 .stApp{ background:var(--bg); }
