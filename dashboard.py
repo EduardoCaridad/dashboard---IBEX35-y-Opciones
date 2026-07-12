@@ -44,6 +44,17 @@ _CSS = """
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap');
 
 :root{
+/* Fondo y texto base, por si el config.toml no cargó (p. ej. en la nube) */
+.stApp, [data-testid="stAppViewContainer"], [data-testid="stMain"]{
+  background:#0a0e14 !important;
+  color:#f2f6fb !important;
+}
+.stApp p, .stApp span, .stApp label, .stApp li,
+[data-testid="stMarkdownContainer"], [data-testid="stWidgetLabel"] p{
+  color:#f2f6fb !important;
+}
+[data-testid="stCaptionContainer"] p{ color:#aab4c4 !important; }
+[data-testid="stHeader"]{ background:transparent !important; }
   --bg:#0a0e14; --panel:#121a24; --border:#1e2a38;
   --text:#f2f6fb; --muted:#aab4c4; --green:#00c896; --red:#ff5d73;
 }
