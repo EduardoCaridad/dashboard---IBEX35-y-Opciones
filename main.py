@@ -3,7 +3,7 @@ Dashboard IBEX 35 — cotizaciones, precios objetivo y revalorización de opcion
 
 Todo se alimenta de Yahoo Finance (yfinance). El valor de las opciones se calcula
 con QuantLib bajo el escenario B: "¿cuánto valdría la opción si la acción saltara
-al precio objetivo de los analistas, hoy, con la misma volatilidad y vencimiento?"
+al precio objetivo de los analistas con la misma volatilidad y vencimiento?"
 
 Estructura:
   1. Configuración
@@ -96,7 +96,7 @@ def snapshot_ibex(tickers: list[str]) -> pd.DataFrame:
     return pd.DataFrame(filas)
 
 
-# =============== 3. OBJETIVOS + DIVIDENDO (cacheado) ===============
+# =============== 3. OBJETIVOS + DIVIDENDO ===============
 
 def _norm_div(y) -> float:
     """yfinance devuelve el dividend yield de forma inconsistente: unas veces como
