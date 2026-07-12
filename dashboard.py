@@ -173,12 +173,6 @@ def construir_base(ventana):
     return base
 
 
-
-
-#import queue
-#import threading
-
-
 class _QLWorker:
     def __init__(self):
         self._q = queue.Queue()
@@ -208,8 +202,6 @@ def _ql_worker():
     return _QLWorker()
 
 
-# Tareas QuantLib: reciben SOLO primitivos y crean todos los ql.Date por dentro,
-# de modo que la creación y destrucción ocurren íntegramente en el hilo trabajador.
 
 def _tarea_malla(datos, anio, mes, niveles, r):
     base = pd.DataFrame(list(datos),
@@ -259,7 +251,7 @@ def _reval_fecha_cached(spot, precio_sim, strike, anio_v, mes_v, sim_iso, vol, q
                             anio_v, mes_v, sim_iso, vol, q, r)
 
 
-# =================== FIGURAS (lógica pura) ===================
+# =================== FIGURAS  ===================
 
 def figura_heatmap(malla, cap):
     num = malla.drop(index="Instrumento").astype(float)
