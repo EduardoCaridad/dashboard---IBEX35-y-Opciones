@@ -1,0 +1,8 @@
+streamlit
+streamlit-autorefresh
+pandas>=2.2,<3
+numpy
+yfinance
+QuantLib
+plotly
+pyarrow
