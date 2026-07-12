@@ -22,6 +22,10 @@ import QuantLib as ql
 from streamlit_autorefresh import st_autorefresh
 from pathlib import Path
 
+import queue
+import threading
+
+
 _CONTADOR = Path(__file__).parent / "visitas.txt"
 
 def registrar_visita():
@@ -54,7 +58,7 @@ from main import (
 st.set_page_config(page_title="IBEX 35 · Revalorización de opciones", layout="wide")
 
 
-# =================== ESTILO (tema terminal financiero) ===================
+# =================== ESTILO ===================
 
 _CSS = """
 <style>
@@ -137,7 +141,7 @@ def pnl_card(col, label, valor, color="var(--text)", sub=""):
         unsafe_allow_html=True)
 
 
-# =================== CAPA DE DATOS (cacheada) ===================
+# =================== CAPA DE DATOS ===================
 
 @st.cache_data(ttl=840, show_spinner="Actualizando precios...")
 def _precios():
@@ -169,15 +173,10 @@ def construir_base(ventana):
     return base
 
 
-# --- TODO el código QuantLib corre en UN ÚNICO hilo dedicado ---
-# QuantLib no es thread-safe y mantiene estado global (Settings.evaluationDate).
-# Streamlit reejecuta el script en hilos distintos, así que si QuantLib se toca
-# desde varios hilos, al destruir sus objetos globales entre reejecuciones peta
-# (segfault). Solución: un hilo trabajador vivo toda la sesión que ejecuta cada
-# tarea QuantLib. Así ese estado global solo lo toca ese hilo. Nunca hay cruce.
 
-import queue
-import threading
+
+#import queue
+#import threading
 
 
 class _QLWorker:
