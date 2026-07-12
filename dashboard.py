@@ -4,7 +4,7 @@ Dashboard IBEX 35 — Streamlit.
 Capa visual sobre el motor de datos de main.py. Ejecutar con:
     streamlit run dashboard.py
 
-Cadencia de refresco (respeta lo que diseñamos):
+Cadencia de refresco:
   - Precios: caché de 60 s (cambian rápido).
   - Objetivos y volatilidad: caché de 6 h (cambian despacio).
 
@@ -20,8 +20,25 @@ import plotly.graph_objects as go
 import streamlit as st
 import QuantLib as ql
 from streamlit_autorefresh import st_autorefresh
+from pathlib import Path
 
-# Texto object de numpy en todo el proceso (evita el segfault de string[pyarrow]).
+_CONTADOR = Path(__file__).parent / "visitas.txt"
+
+def registrar_visita():
+    # Cuenta una sola vez por sesión, no en cada reejecución del script
+    if not st.session_state.get("_contada"):
+        st.session_state["_contada"] = True
+        try:
+            n = int(_CONTADOR.read_text())
+        except (FileNotFoundError, ValueError):
+            n = 0
+        n += 1
+        _CONTADOR.write_text(str(n))
+        print(f"[VISITAS] visita nº {n}")   
+
+registrar_visita()
+
+# Para evitar el segfault de string[pyarrow].
 for _opt, _val in (("future.infer_string", False), ("mode.string_storage", "python")):
     try:
         pd.set_option(_opt, _val)
